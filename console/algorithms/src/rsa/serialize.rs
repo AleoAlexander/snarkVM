@@ -48,7 +48,8 @@ mod tests {
 
         for i in 0..ITERATIONS {
             // Sample a new signature.
-            let (_, _, expected) = test_helpers::sample_rsa_signature(i, &hasher, &mut rng, &SHA2HashAlgorithm::Sha256, 2048);
+            let (_, _, expected) =
+                test_helpers::sample_rsa_signature(i, &hasher, &mut rng, &SHA2HashAlgorithm::Sha256, 2048);
             // Serialize
             let expected_string = &expected.to_string();
             let candidate_string = serde_json::to_string(&expected)?;
@@ -68,7 +69,8 @@ mod tests {
 
         for i in 0..ITERATIONS {
             // Sample a new signature.
-            let (_, _, expected) = test_helpers::sample_rsa_signature(i, &hasher, &mut rng, &SHA2HashAlgorithm::Sha256, 2048);
+            let (_, _, expected) =
+                test_helpers::sample_rsa_signature(i, &hasher, &mut rng, &SHA2HashAlgorithm::Sha256, 2048);
 
             // Serialize
             let expected_bytes = expected.to_bytes_le()?;

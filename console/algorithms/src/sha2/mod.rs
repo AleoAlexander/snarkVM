@@ -21,22 +21,18 @@ use snarkvm_utilities::Uniform;
 use crate::Hash;
 use snarkvm_console_types::environment::prelude::*;
 
-
-
 /// The SHA2-224 hash function.
-pub type Sha2_224 = SHA2<224,0>;
+pub type Sha2_224 = SHA2<224, 0>;
 /// The SHA2-256 hash function.
-pub type Sha2_256 = SHA2<256,0>;
+pub type Sha2_256 = SHA2<256, 0>;
 /// The SHA2-384 hash function.
-pub type Sha2_384 = SHA2<384,0>;
+pub type Sha2_384 = SHA2<384, 0>;
 /// The SHA2-512 hash function.
-pub type Sha2_512 = SHA2<512,0>;
+pub type Sha2_512 = SHA2<512, 0>;
 /// The SHA2-512_224 hash function.
-pub type Sha2_512_224 = SHA2<512,224>;
+pub type Sha2_512_224 = SHA2<512, 224>;
 /// The SHA2-512_256 hash function.
-pub type Sha2_512_256 = SHA2<512,256>;
-
-
+pub type Sha2_512_256 = SHA2<512, 256>;
 
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
-pub struct SHA2<const VARIANT: usize, const TRUNCATE:usize>;
+pub struct SHA2<const VARIANT: usize, const TRUNCATE: usize>;

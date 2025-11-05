@@ -19,12 +19,17 @@ use ::rsa::BigUint;
 
 const ITERATIONS: usize = 5;
 
-fn test_rsa<H: Hash<Output = Vec<bool>, Input = bool>>(hasher: &H, rng: &mut TestRng, hash_algorithm: SHA2HashAlgorithm) {
+fn test_rsa<H: Hash<Output = Vec<bool>, Input = bool>>(
+    hasher: &H,
+    rng: &mut TestRng,
+    hash_algorithm: SHA2HashAlgorithm,
+) {
     let lengths = [2048, 3072, 4096];
 
     for signature_length in lengths {
         for i in 1..ITERATIONS {
-            let (private_key, message, signature) = test_helpers::sample_rsa_signature(i, hasher, rng, &hash_algorithm, signature_length);
+            let (private_key, message, signature) =
+                test_helpers::sample_rsa_signature(i, hasher, rng, &hash_algorithm, signature_length);
 
             let rsa_public_key = RsaPublicKey::from(private_key.clone());
 
@@ -48,8 +53,6 @@ fn test_rsa_signature() {
     test_rsa(&Sha2_512_224::default(), rng, SHA2HashAlgorithm::Sha512_224);
     test_rsa(&Sha2_512_256::default(), rng, SHA2HashAlgorithm::Sha512_256);
 }
-
-
 
 #[test]
 fn test_rsa_signature_vector() {
@@ -75,18 +78,22 @@ fn test_rsa_signature_vector() {
     let signature = RSASignature::from_bytes_le(&signature_bytes).unwrap();
 
     // Check that the signature verifies against the recovered public key.
-    assert!((signature.verify(rsa_public_key.clone(), &SHA2HashAlgorithm::Sha256, &hasher, &data_bytes.to_bits_le())).is_ok());
+    assert!(
+        (signature.verify(rsa_public_key.clone(), &SHA2HashAlgorithm::Sha256, &hasher, &data_bytes.to_bits_le()))
+            .is_ok()
+    );
 
     // Check that the signature verifies using the digest.
     let message_digest = hasher.hash(&data_bytes.to_bits_le()).unwrap();
     assert!(signature.verify_with_digest(rsa_public_key.clone(), &SHA2HashAlgorithm::Sha256, &message_digest).is_ok());
 
-
     // Check that the signature does not verify against modified data.
     let wrong_data = data_bytes[6..].to_vec();
-    assert!((signature.verify(rsa_public_key.clone(), &SHA2HashAlgorithm::Sha256, &hasher, &wrong_data.to_bits_le())).is_err());
+    assert!(
+        (signature.verify(rsa_public_key.clone(), &SHA2HashAlgorithm::Sha256, &hasher, &wrong_data.to_bits_le()))
+            .is_err()
+    );
 }
-
 
 // #[test]
 // fn test_rsa_signature_generation() {
@@ -110,9 +117,9 @@ fn test_rsa_signature_vector() {
 //     let prime2_bytes = hex::decode(&prime2[2..]).unwrap();
 //     let n = BigUint::from_bytes_be(&modulus_bytes);
 //     let d = BigUint::from_bytes_be(&private_exponent_bytes);
-//     let e = BigUint::from_bytes_be(&public_exponent_bytes); 
-//     let p = BigUint::from_bytes_be(&prime1_bytes); 
-//     let q = BigUint::from_bytes_be(&prime2_bytes); 
+//     let e = BigUint::from_bytes_be(&public_exponent_bytes);
+//     let p = BigUint::from_bytes_be(&prime1_bytes);
+//     let q = BigUint::from_bytes_be(&prime2_bytes);
 
 //     let rsa_private_key = RsaPrivateKey::from_components(n,e,d,vec![p,q]).unwrap();
 //     let signing_key = BlindedSigningKey::<Sha256>::new(rsa_private_key);

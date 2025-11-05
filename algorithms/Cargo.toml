@@ -45,8 +45,6 @@ path = "benches/snark/varuna.rs"
 harness = false
 required-features = [ "test" ]
 
-[dependencies]
-
 [dependencies.snarkvm-curves]
 workspace = true
 

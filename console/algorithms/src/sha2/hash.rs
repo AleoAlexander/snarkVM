@@ -16,17 +16,9 @@
 use super::*;
 use snarkvm_utilities::{bits_from_bytes_le, bytes_from_bits_le};
 
-use sha2::{
-    Digest, 
-    Sha224, 
-    Sha256, 
-    Sha512_224, 
-    Sha512_256, 
-    Sha384, 
-    Sha512
-};
+use sha2::{Digest, Sha224, Sha256, Sha384, Sha512, Sha512_224, Sha512_256};
 
-impl<const VARIANT: usize, const TRUNCATION : usize> Hash for SHA2<VARIANT, TRUNCATION> {
+impl<const VARIANT: usize, const TRUNCATION: usize> Hash for SHA2<VARIANT, TRUNCATION> {
     type Input = bool;
     type Output = Vec<bool>;
 
@@ -38,8 +30,8 @@ impl<const VARIANT: usize, const TRUNCATION : usize> Hash for SHA2<VARIANT, TRUN
             (256, 0) => bits_from_bytes_le(&sha2_256_native(&bytes_from_bits_le(input))).collect(),
             (384, 0) => bits_from_bytes_le(&sha2_384_native(&bytes_from_bits_le(input))).collect(),
             (512, 0) => bits_from_bytes_le(&sha2_512_native(&bytes_from_bits_le(input))).collect(),
-            (512,224) => bits_from_bytes_le(&sha2_512_224_native(&bytes_from_bits_le(input))).collect(),
-            (512,256) => bits_from_bytes_le(&sha2_512_256_native(&bytes_from_bits_le(input))).collect(),
+            (512, 224) => bits_from_bytes_le(&sha2_512_224_native(&bytes_from_bits_le(input))).collect(),
+            (512, 256) => bits_from_bytes_le(&sha2_512_256_native(&bytes_from_bits_le(input))).collect(),
             _ => unreachable!("Invalid SHA2 variant"),
         };
         Ok(result)
@@ -48,46 +40,45 @@ impl<const VARIANT: usize, const TRUNCATION : usize> Hash for SHA2<VARIANT, TRUN
 
 /// Computes the SHA2-224 hash of the given preimage as bytes.
 fn sha2_224_native(preimage: &[u8]) -> [u8; 28] {
-     // create a Sha224 object
+    // create a Sha224 object
     let mut sha224 = Sha224::new();
     // write input message
     sha224.update(preimage);
     //Try casting in array of 28 bytes (should work even though size is "not known at compile time" because hash output is always fixed size)
-    let hash : [u8; 28] = sha224.finalize()[..].try_into().expect("Error casting to result");
+    let hash: [u8; 28] = sha224.finalize()[..].try_into().expect("Error casting to result");
     hash
-
 }
 
 /// Computes the SHA2-256 hash of the given preimage as bytes.
 fn sha2_256_native(preimage: &[u8]) -> [u8; 32] {
-     // create a Sha256 object
+    // create a Sha256 object
     let mut sha256 = Sha256::new();
     // write input message
     sha256.update(preimage);
     //Try casting in array of 32 bytes (should work even though size is "not known at compile time" because hash output is always fixed size)
-    let hash : [u8; 32] = sha256.finalize()[..].try_into().expect("Error casting to result");
+    let hash: [u8; 32] = sha256.finalize()[..].try_into().expect("Error casting to result");
     hash
 }
 
 /// Computes the SHA2-384 hash of the given preimage as bytes.
 fn sha2_384_native(preimage: &[u8]) -> [u8; 48] {
-     // create a Sha384 object
+    // create a Sha384 object
     let mut sha384 = Sha384::new();
     // write input message
     sha384.update(preimage);
     //Try casting in array of 48 bytes (should work even though size is "not known at compile time" because hash output is always fixed size)
-    let hash : [u8; 48] = sha384.finalize()[..].try_into().expect("Error casting to result");
+    let hash: [u8; 48] = sha384.finalize()[..].try_into().expect("Error casting to result");
     hash
 }
 
 /// Computes the SHA2-512 hash of the given preimage as bytes.
 fn sha2_512_native(preimage: &[u8]) -> [u8; 64] {
-     // create a Sha512 object
+    // create a Sha512 object
     let mut sha512 = Sha512::new();
     // write input message
     sha512.update(preimage);
     //Try casting in array of 64 bytes (should work even though size is "not known at compile time" because hash output is always fixed size)
-    let hash : [u8; 64] = sha512.finalize()[..].try_into().expect("Error casting to result");
+    let hash: [u8; 64] = sha512.finalize()[..].try_into().expect("Error casting to result");
     hash
 }
 
@@ -98,7 +89,7 @@ fn sha2_512_224_native(preimage: &[u8]) -> [u8; 28] {
     // write input message
     sha512_224.update(preimage);
     //Try casting in array of 28 bytes (should work even though size is "not known at compile time" because hash output is always fixed size)
-    let hash : [u8; 28] = sha512_224.finalize()[..].try_into().expect("Error casting to result");
+    let hash: [u8; 28] = sha512_224.finalize()[..].try_into().expect("Error casting to result");
     hash
 }
 
@@ -109,11 +100,9 @@ fn sha2_512_256_native(preimage: &[u8]) -> [u8; 32] {
     // write input message
     sha512_256.update(preimage);
     //Try casting in array of 32 bytes (should work even though size is "not known at compile time" because hash output is always fixed size)
-    let hash : [u8; 32] = sha512_256.finalize()[..].try_into().expect("Error casting to result");
+    let hash: [u8; 32] = sha512_256.finalize()[..].try_into().expect("Error casting to result");
     hash
 }
-
-
 
 #[cfg(test)]
 mod tests {
