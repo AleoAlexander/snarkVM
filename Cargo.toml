@@ -172,6 +172,8 @@ serial = [
   "snarkvm-ledger?/serial"
 ]
 
+[dependencies]
+
 [workspace.dependencies.snarkvm-algorithms]
 path = "algorithms"
 version = "=4.3.0"
@@ -445,9 +447,6 @@ version = "0.7"
 
 [workspace.dependencies.colored]
 version = "3"
-
-[workspace.dependencies.dotenvy]
-version = "0.15"
 
 [workspace.dependencies.enum-iterator]
 version = "2.1"
