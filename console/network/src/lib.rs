@@ -36,7 +36,6 @@ mod mainnet_v0;
 pub use mainnet_v0::*;
 
 mod testnet_v0;
-
 pub use testnet_v0::*;
 
 pub mod prelude {
@@ -443,6 +442,24 @@ pub trait Network:
 
     /// Returns the SHA-3 hash with a 512-bit output.
     fn hash_sha3_512(input: &[bool]) -> Result<Vec<bool>>;
+
+    /// Returns the SHA-2 hash with a 224-bit output.
+    fn hash_sha2_224(input: &[bool]) -> Result<Vec<bool>>;
+
+    /// Returns the SHA-2 hash with a 256-bit output.
+    fn hash_sha2_256(input: &[bool]) -> Result<Vec<bool>>;
+
+    /// Returns the SHA-2 hash with a 384-bit output.
+    fn hash_sha2_384(input: &[bool]) -> Result<Vec<bool>>;
+
+    /// Returns the SHA-2 hash with a 512-bit output.
+    fn hash_sha2_512(input: &[bool]) -> Result<Vec<bool>>;
+
+    /// Returns the SHA-2 hash with a 512-bit output truncated to 224 bits.
+    fn hash_sha2_512_224(input: &[bool]) -> Result<Vec<bool>>;
+
+    /// Returns the SHA-2 hash with a 512-bit output truncated to 256 bits.
+    fn hash_sha2_512_256(input: &[bool]) -> Result<Vec<bool>>;
 
     /// Returns the extended Poseidon hash with an input rate of 2.
     fn hash_many_psd2(input: &[Field<Self>], num_outputs: u16) -> Vec<Field<Self>>;

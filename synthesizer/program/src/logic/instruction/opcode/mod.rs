@@ -44,6 +44,8 @@ pub enum Opcode {
     Sign(&'static str),
     /// The opcode is for ECDSA signature verification (i.e. `ecdsa.verify.keccak`).
     ECDSA(&'static str),
+    /// The opcode is for RSA signature verification (i.e. `rsa.verify.sha2_256`).
+    RSA(&'static str),
 }
 
 impl Deref for Opcode {
@@ -65,6 +67,7 @@ impl Deref for Opcode {
             Opcode::Serialize(opcode) => opcode,
             Opcode::Sign(opcode) => opcode,
             Opcode::ECDSA(opcode) => opcode,
+            Opcode::RSA(opcode) => opcode,
         }
     }
 }
@@ -93,6 +96,7 @@ impl Display for Opcode {
             Self::Serialize(opcode) => write!(f, "{opcode}"),
             Self::Sign(opcode) => write!(f, "{opcode}"),
             Self::ECDSA(opcode) => write!(f, "{opcode}"),
+            Self::RSA(opcode) => write!(f, "{opcode}"),
         }
     }
 }

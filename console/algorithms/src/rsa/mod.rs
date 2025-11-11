@@ -19,7 +19,7 @@ pub mod rsa_tests;
 mod serialize;
 
 use super::*;
-use snarkvm_utilities::bytes_from_bits_le;
+use snarkvm_utilities::bytes_from_bits_be;
 
 use ::rsa::{
     RsaPublicKey,
@@ -48,66 +48,86 @@ impl RSASignature {
     /// Verify `(n,e)` against `verifying_key` using *your* hasher on `message`.
     pub fn verify<H: Hash<Output = Vec<bool>>>(
         &self,
-        rsa_public_key: RsaPublicKey,
+        rsa_public_key: &RsaPublicKey,
         hash_algorithm: &SHA2HashAlgorithm,
         hasher: &H,
         message: &[H::Input],
+        salt_len: Option<usize>,
     ) -> Result<()> {
         // Hash the message.
         let hash_bits = hasher.hash(message)?;
 
         // Verify the signature using the prehash.
-        self.verify_with_digest(rsa_public_key, hash_algorithm, &hash_bits)
+        self.verify_with_digest(rsa_public_key, hash_algorithm, &hash_bits, salt_len)
     }
 
     /// Verify `(n,e)` against `verifying_key` using the provided `digest`.
     pub fn verify_with_digest(
         &self,
-        rsa_public_key: RsaPublicKey,
+        rsa_public_key: &RsaPublicKey,
         hash_algorithm: &SHA2HashAlgorithm,
         digest_bits: &[bool],
+        salt_len: Option<usize>,
     ) -> Result<()> {
         // Convert the digest output to bytes.
-        let digest = bytes_from_bits_le(digest_bits);
+        let digest = bytes_from_bits_be(digest_bits);
 
         match hash_algorithm {
             SHA2HashAlgorithm::Sha224 => {
-                let verifying_key = VerifyingKey::<Sha224>::from(rsa_public_key);
+                let verifying_key = match salt_len {
+                    Some(len) => VerifyingKey::<Sha224>::new_with_salt_len(rsa_public_key.clone(), len),
+                    None => VerifyingKey::<Sha224>::new(rsa_public_key.clone()),
+                };
                 // Verify the signature using the prehash digest.
                 verifying_key
                     .verify_prehash(&digest, &self.signature)
                     .map_err(|e| anyhow!("Failed to verify signature: {e:?}"))
             }
             SHA2HashAlgorithm::Sha256 => {
-                let verifying_key = VerifyingKey::<Sha256>::from(rsa_public_key);
+                let verifying_key = match salt_len {
+                    Some(len) => VerifyingKey::<Sha256>::new_with_salt_len(rsa_public_key.clone(), len),
+                    None => VerifyingKey::<Sha256>::new(rsa_public_key.clone()),
+                };
                 // Verify the signature using the prehash digest.
                 verifying_key
                     .verify_prehash(&digest, &self.signature)
                     .map_err(|e| anyhow!("Failed to verify signature: {e:?}"))
             }
             SHA2HashAlgorithm::Sha384 => {
-                let verifying_key = VerifyingKey::<Sha384>::from(rsa_public_key);
+                let verifying_key = match salt_len {
+                    Some(len) => VerifyingKey::<Sha384>::new_with_salt_len(rsa_public_key.clone(), len),
+                    None => VerifyingKey::<Sha384>::new(rsa_public_key.clone()),
+                };
                 // Verify the signature using the prehash digest.
                 verifying_key
                     .verify_prehash(&digest, &self.signature)
                     .map_err(|e| anyhow!("Failed to verify signature: {e:?}"))
             }
             SHA2HashAlgorithm::Sha512 => {
-                let verifying_key = VerifyingKey::<Sha512>::from(rsa_public_key);
+                let verifying_key = match salt_len {
+                    Some(len) => VerifyingKey::<Sha512>::new_with_salt_len(rsa_public_key.clone(), len),
+                    None => VerifyingKey::<Sha512>::new(rsa_public_key.clone()),
+                };
                 // Verify the signature using the prehash digest.
                 verifying_key
                     .verify_prehash(&digest, &self.signature)
                     .map_err(|e| anyhow!("Failed to verify signature: {e:?}"))
             }
             SHA2HashAlgorithm::Sha512_224 => {
-                let verifying_key = VerifyingKey::<Sha512_224>::from(rsa_public_key);
+                let verifying_key = match salt_len {
+                    Some(len) => VerifyingKey::<Sha512_224>::new_with_salt_len(rsa_public_key.clone(), len),
+                    None => VerifyingKey::<Sha512_224>::new(rsa_public_key.clone()),
+                };
                 // Verify the signature using the prehash digest.
                 verifying_key
                     .verify_prehash(&digest, &self.signature)
                     .map_err(|e| anyhow!("Failed to verify signature: {e:?}"))
             }
             SHA2HashAlgorithm::Sha512_256 => {
-                let verifying_key = VerifyingKey::<Sha512_256>::from(rsa_public_key);
+                let verifying_key = match salt_len {
+                    Some(len) => VerifyingKey::<Sha512_256>::new_with_salt_len(rsa_public_key.clone(), len),
+                    None => VerifyingKey::<Sha512_256>::new(rsa_public_key.clone()),
+                };
                 // Verify the signature using the prehash digest.
                 verifying_key
                     .verify_prehash(&digest, &self.signature)
@@ -120,7 +140,9 @@ impl RSASignature {
 impl ToBytes for RSASignature {
     fn write_le<W: Write>(&self, mut writer: W) -> IoResult<()> {
         // Write the signature bytes.
-        self.signature.to_bytes().to_vec().write_le(&mut writer)
+        let mut copy = self.signature.to_bytes().to_vec();
+        copy.reverse();
+        copy.write_le(&mut writer)
     }
 }
 
@@ -130,6 +152,7 @@ impl FromBytes for RSASignature {
         let mut bytes = Vec::new();
         reader.read_to_end(&mut bytes)?;
         // Construct the signature from the bytes.
+        bytes.reverse();
         let signature = Signature::try_from(&bytes[..]).map_err(error)?;
 
         Ok(Self { signature })
@@ -173,7 +196,7 @@ impl Display for RSASignature {
 mod test_helpers {
     use super::*;
 
-    use ::rsa::{RsaPrivateKey, pss::BlindedSigningKey, signature::hazmat::RandomizedPrehashSigner};
+    use ::rsa::{RsaPrivateKey, pss::SigningKey, signature::hazmat::RandomizedPrehashSigner};
 
     pub(crate) type DefaultHasher = Sha2_256;
 
@@ -189,65 +212,65 @@ mod test_helpers {
 
         match hash_algorithm {
             SHA2HashAlgorithm::Sha224 => {
-                let signing_key = BlindedSigningKey::<Sha224>::new(private_key.clone());
+                let signing_key = SigningKey::<Sha224>::new(private_key.clone());
                 // Sample a random message.
                 let message: Vec<u8> = (0..num_bytes).map(|_| rng.r#gen()).collect::<Vec<_>>();
 
                 //Hash the message
-                let hash = hasher.hash(&message.to_bits_le()).unwrap();
+                let hash = hasher.hash(&message.to_bits_be()).unwrap();
 
                 // Sign the message.
-                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_le(&hash)).unwrap();
+                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_be(&hash)).unwrap();
                 let rsa_signature: RSASignature = RSASignature { signature };
 
                 // Return the signing key, message, and signature.
                 (private_key, message, rsa_signature)
             }
             SHA2HashAlgorithm::Sha256 => {
-                let signing_key = BlindedSigningKey::<Sha256>::new(private_key.clone());
+                let signing_key = SigningKey::<Sha256>::new(private_key.clone());
                 let message: Vec<u8> = (0..num_bytes).map(|_| rng.r#gen()).collect::<Vec<_>>();
-                let hash = hasher.hash(&message.to_bits_le()).unwrap();
-                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_le(&hash)).unwrap();
+                let hash = hasher.hash(&message.to_bits_be()).unwrap();
+                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_be(&hash)).unwrap();
                 let rsa_signature: RSASignature = RSASignature { signature };
 
                 // Return the signing key, message, and signature.
                 (private_key, message, rsa_signature)
             }
             SHA2HashAlgorithm::Sha384 => {
-                let signing_key = BlindedSigningKey::<Sha384>::new(private_key.clone());
+                let signing_key = SigningKey::<Sha384>::new(private_key.clone());
                 let message: Vec<u8> = (0..num_bytes).map(|_| rng.r#gen()).collect::<Vec<_>>();
-                let hash = hasher.hash(&message.to_bits_le()).unwrap();
-                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_le(&hash)).unwrap();
+                let hash = hasher.hash(&message.to_bits_be()).unwrap();
+                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_be(&hash)).unwrap();
                 let rsa_signature: RSASignature = RSASignature { signature };
 
                 // Return the signing key, message, and signature.
                 (private_key, message, rsa_signature)
             }
             SHA2HashAlgorithm::Sha512 => {
-                let signing_key = BlindedSigningKey::<Sha512>::new(private_key.clone());
+                let signing_key = SigningKey::<Sha512>::new(private_key.clone());
                 let message: Vec<u8> = (0..num_bytes).map(|_| rng.r#gen()).collect::<Vec<_>>();
-                let hash = hasher.hash(&message.to_bits_le()).unwrap();
-                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_le(&hash)).unwrap();
+                let hash = hasher.hash(&message.to_bits_be()).unwrap();
+                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_be(&hash)).unwrap();
                 let rsa_signature: RSASignature = RSASignature { signature };
 
                 // Return the signing key, message, and signature.
                 (private_key, message, rsa_signature)
             }
             SHA2HashAlgorithm::Sha512_224 => {
-                let signing_key = BlindedSigningKey::<Sha512_224>::new(private_key.clone());
+                let signing_key = SigningKey::<Sha512_224>::new(private_key.clone());
                 let message: Vec<u8> = (0..num_bytes).map(|_| rng.r#gen()).collect::<Vec<_>>();
-                let hash = hasher.hash(&message.to_bits_le()).unwrap();
-                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_le(&hash)).unwrap();
+                let hash = hasher.hash(&message.to_bits_be()).unwrap();
+                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_be(&hash)).unwrap();
                 let rsa_signature: RSASignature = RSASignature { signature };
 
                 // Return the signing key, message, and signature.
                 (private_key, message, rsa_signature)
             }
             SHA2HashAlgorithm::Sha512_256 => {
-                let signing_key = BlindedSigningKey::<Sha512_256>::new(private_key.clone());
+                let signing_key = SigningKey::<Sha512_256>::new(private_key.clone());
                 let message: Vec<u8> = (0..num_bytes).map(|_| rng.r#gen()).collect::<Vec<_>>();
-                let hash = hasher.hash(&message.to_bits_le()).unwrap();
-                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_le(&hash)).unwrap();
+                let hash = hasher.hash(&message.to_bits_be()).unwrap();
+                let signature = signing_key.sign_prehash_with_rng(rng, &bytes_from_bits_be(&hash)).unwrap();
                 let rsa_signature: RSASignature = RSASignature { signature };
 
                 // Return the signing key, message, and signature.

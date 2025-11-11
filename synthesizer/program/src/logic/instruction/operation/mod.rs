@@ -45,6 +45,9 @@ pub use literals::*;
 
 mod macros;
 
+mod rsa_verify;
+pub use rsa_verify::*;
+
 mod serialize;
 pub use serialize::*;
 

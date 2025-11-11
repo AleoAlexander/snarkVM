@@ -541,6 +541,39 @@ pub fn bytes_from_bits_le(bits: &[bool]) -> Vec<u8> {
     bytes
 }
 
+#[inline]
+pub fn bits_from_bytes_be(bytes: &[u8]) -> impl DoubleEndedIterator<Item = bool> + '_ {
+    bytes.iter().flat_map(|byte| (0..8).rev().map(move |i| (*byte >> i) & 1 == 1))
+}
+
+#[inline]
+pub fn bytes_from_bits_be(bits: &[bool]) -> Vec<u8> {
+    let desired_size = if bits.len() % 8 == 0 { bits.len() / 8 } else { bits.len() / 8 + 1 };
+
+    let mut bytes = Vec::with_capacity(desired_size);
+    let bits_reversed: Vec<bool> = bits.iter().rev().cloned().collect();
+    for bits in bits_reversed.chunks(8) {
+        let mut result = 0u8;
+        for (i, bit) in bits.iter().enumerate() {
+            let bit_value = *bit as u8;
+            result += bit_value << i as u8;
+        }
+
+        bytes.push(result);
+    }
+    bytes.reverse();
+
+    bytes
+}
+
+#[inline]
+pub fn bytes_switch_endianness(bytes: &[u8]) -> impl DoubleEndedIterator<Item = u8> + '_ {
+    // let result = bytes.clone();
+    // result.reverse();
+    // result
+    bytes.iter().rev().copied()
+}
+
 /// A wrapper around a `Write` instance that limits the number of bytes that can be written.
 pub struct LimitedWriter<W: Write> {
     writer: W,
@@ -639,6 +672,69 @@ mod test {
             let recovered_bytes = bytes_from_bits_le(&bits);
 
             assert_eq!(given_bytes.to_vec(), recovered_bytes);
+        }
+    }
+
+    #[test]
+    fn test_bits_from_bytes_be() {
+        assert_eq!(bits_from_bytes_be(&[204, 76]).collect::<Vec<bool>>(), [
+            true, true, false, false, true, true, false, false, // 204
+            false, true, false, false, true, true, false, false, // 76
+        ]);
+
+        assert_eq!(bits_from_bytes_be(&[1, 204]).collect::<Vec<bool>>(), [
+            false, false, false, false, false, false, false, true, // 1
+            true, true, false, false, true, true, false, false, // 204
+        ]);
+    }
+
+    #[test]
+    fn test_bytes_from_bits_be() {
+        let bits = [
+            true, true, false, false, true, true, false, false, // 204
+            false, true, false, false, true, true, false, false, // 76
+        ];
+        assert_eq!(bytes_from_bits_be(&bits), [204, 76]);
+
+        let uneven_bits = [
+            true, // 1
+            true, true, false, false, true, true, false, false, // 204
+        ];
+        assert_eq!(bytes_from_bits_be(&uneven_bits), [1, 204]);
+    }
+
+    #[test]
+    fn test_from_bits_be_to_bytes_be_roundtrip() {
+        let mut rng = TestRng::default();
+
+        for _ in 0..ITERATIONS {
+            let given_bytes: [u8; 32] = rng.r#gen();
+
+            let bits = bits_from_bytes_be(&given_bytes).collect::<Vec<_>>();
+            let recovered_bytes = bytes_from_bits_be(&bits);
+
+            assert_eq!(given_bytes.to_vec(), recovered_bytes);
+        }
+    }
+
+    #[test]
+    fn test_bytes_switch_endianess() {
+        let mut rng = TestRng::default();
+
+        let big_endian_vector: [u8; 7] = [171, 112, 28, 117, 170, 228, 243];
+        let little_endian_vector: [u8; 7] = [243, 228, 170, 117, 28, 112, 171];
+
+        assert_eq!(little_endian_vector.to_vec(), bytes_switch_endianness(&big_endian_vector).collect::<Vec<_>>());
+        assert_eq!(big_endian_vector.to_vec(), bytes_switch_endianness(&little_endian_vector).collect::<Vec<_>>());
+
+        for _ in 0..ITERATIONS {
+            let given_bytes: [u8; 32] = rng.r#gen();
+
+            let reversed_bytes = bytes_switch_endianness(&given_bytes).collect::<Vec<_>>();
+
+            let mut given_bytes_vec = given_bytes.to_vec();
+            given_bytes_vec.reverse();
+            assert_eq!(given_bytes_vec, reversed_bytes);
         }
     }
 

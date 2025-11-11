@@ -14,11 +14,11 @@
 // limitations under the License.
 
 use super::*;
-use snarkvm_utilities::{bits_from_bytes_le, bytes_from_bits_le};
+use snarkvm_utilities::{bits_from_bytes_be, bytes_from_bits_be};
 
 use sha2::{Digest, Sha224, Sha256, Sha384, Sha512, Sha512_224, Sha512_256};
 
-impl<const VARIANT: usize, const TRUNCATION: usize> Hash for SHA2<VARIANT, TRUNCATION> {
+impl<const VARIANT: usize, const TRUNCATION: usize> Hash for Sha2<VARIANT, TRUNCATION> {
     type Input = bool;
     type Output = Vec<bool>;
 
@@ -26,12 +26,12 @@ impl<const VARIANT: usize, const TRUNCATION: usize> Hash for SHA2<VARIANT, TRUNC
     #[inline]
     fn hash(&self, input: &[Self::Input]) -> Result<Self::Output> {
         let result = match (VARIANT, TRUNCATION) {
-            (224, 0) => bits_from_bytes_le(&sha2_224_native(&bytes_from_bits_le(input))).collect(),
-            (256, 0) => bits_from_bytes_le(&sha2_256_native(&bytes_from_bits_le(input))).collect(),
-            (384, 0) => bits_from_bytes_le(&sha2_384_native(&bytes_from_bits_le(input))).collect(),
-            (512, 0) => bits_from_bytes_le(&sha2_512_native(&bytes_from_bits_le(input))).collect(),
-            (512, 224) => bits_from_bytes_le(&sha2_512_224_native(&bytes_from_bits_le(input))).collect(),
-            (512, 256) => bits_from_bytes_le(&sha2_512_256_native(&bytes_from_bits_le(input))).collect(),
+            (224, 0) => bits_from_bytes_be(&sha2_224_native(&bytes_from_bits_be(input))).collect(),
+            (256, 0) => bits_from_bytes_be(&sha2_256_native(&bytes_from_bits_be(input))).collect(),
+            (384, 0) => bits_from_bytes_be(&sha2_384_native(&bytes_from_bits_be(input))).collect(),
+            (512, 0) => bits_from_bytes_be(&sha2_512_native(&bytes_from_bits_be(input))).collect(),
+            (512, 224) => bits_from_bytes_be(&sha2_512_224_native(&bytes_from_bits_be(input))).collect(),
+            (512, 256) => bits_from_bytes_be(&sha2_512_256_native(&bytes_from_bits_be(input))).collect(),
             _ => unreachable!("Invalid SHA2 variant"),
         };
         Ok(result)
@@ -108,7 +108,7 @@ fn sha2_512_256_native(preimage: &[u8]) -> [u8; 32] {
 mod tests {
     use super::*;
     use crate::Rng;
-    use snarkvm_utilities::{bits_from_bytes_le, bytes_from_bits_le};
+    use snarkvm_utilities::{bits_from_bytes_be, bytes_from_bits_be};
 
     macro_rules! check_equivalence {
         ($console:expr, $native:expr) => {
@@ -124,8 +124,8 @@ mod tests {
                 let input = (0..num_inputs).map(|_| Uniform::rand(rng)).collect::<Vec<bool>>();
 
                 // Compute the native hash.
-                let expected = $native(&bytes_from_bits_le(&input));
-                let expected = bits_from_bytes_le(&expected).collect::<Vec<_>>();
+                let expected = $native(&bytes_from_bits_be(&input));
+                let expected = bits_from_bytes_be(&expected).collect::<Vec<_>>();
 
                 // Compute the console hash.
                 let candidate = $console.hash(&input).unwrap();

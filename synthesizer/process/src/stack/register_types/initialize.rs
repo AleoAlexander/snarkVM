@@ -592,6 +592,9 @@ impl<N: Network> RegisterTypes<N> {
             Opcode::ECDSA(opcode) => {
                 bail!("Forbidden operation: Instruction '{instruction}' cannot invoke command '{opcode}'.")
             }
+            Opcode::RSA(opcode) => {
+                bail!("Forbidden operation: Instruction '{instruction}' cannot invoke command '{opcode}'.")
+            }
             Opcode::Serialize(opcode) => Self::check_serialize_opcode(opcode, instruction)?,
             Opcode::Deserialize(opcode) => Self::check_deserialize_opcode(opcode, instruction)?,
         }
@@ -986,6 +989,89 @@ impl<N: Network> RegisterTypes<N> {
             ),
             "ecdsa.verify.sha3_512.eth" => ensure!(
                 matches!(instruction, Instruction::ECDSAVerifySha3_512Eth(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            _ => bail!("Instruction '{instruction}' is not for opcode '{opcode}'."),
+        }
+        Ok(())
+    }
+
+    #[inline]
+    pub(crate) fn check_rsa_opcode(opcode: &str, instruction: &Instruction<N>) -> Result<()> {
+        // Ensure the instruction has one destination register.
+        ensure!(instruction.destinations().len() == 1, "Instruction '{instruction}' has multiple destinations.");
+        // Ensure the instruction is the correct one.
+        match opcode {
+            "rsa.verify.sha2_224" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_224(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_224.raw" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_224Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_224.digest" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_224Digest(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_256" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_256(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_256.raw" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_256Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_256.digest" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_256Digest(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_384" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_384(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_384.raw" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_384Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_384.digest" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_384Digest(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_512" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_512(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_512.raw" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_512Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_512.digest" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_512Digest(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_512_224" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_512_224(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_512_224.raw" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_512_224Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_512_224.digest" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_512_224Digest(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_512_256" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_512_256(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_512_256.raw" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_512_256Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "rsa.verify.sha2_512_256.digest" => ensure!(
+                matches!(instruction, Instruction::RSAVerifySha2_512_256Digest(..)),
                 "Instruction '{instruction}' is not for opcode '{opcode}'."
             ),
             _ => bail!("Instruction '{instruction}' is not for opcode '{opcode}'."),

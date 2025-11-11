@@ -19,4 +19,5 @@ mod deserialize;
 mod ecdsa;
 mod hash;
 mod is;
+mod rsa;
 mod serialize;
