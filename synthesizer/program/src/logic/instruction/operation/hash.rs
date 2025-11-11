@@ -586,7 +586,7 @@ fn is_valid_destination_type<N: Network>(variant: u8, destination_type: &Plainte
                 | PlaintextType::Struct(..)
                 | PlaintextType::Array(..)
         ),
-        45..=68 => matches!(destination_type, PlaintextType::Array(array_type) if array_type.is_bit_array()),
+        45..=69 => matches!(destination_type, PlaintextType::Array(array_type) if array_type.is_bit_array()),
         _ => panic!("Invalid 'hash' instruction opcode"),
     }
 }

@@ -779,6 +779,30 @@ impl<N: Network> RegisterTypes<N> {
                 matches!(instruction, Instruction::HashSha3_512(..)),
                 "Instruction '{instruction}' is not for opcode '{opcode}'."
             ),
+            "hash.sha2_224" => ensure!(
+                matches!(instruction, Instruction::HashSha2_224(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_256" => ensure!(
+                matches!(instruction, Instruction::HashSha2_256(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_384" => ensure!(
+                matches!(instruction, Instruction::HashSha2_384(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512_224" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512_224(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512_256" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512_256(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
             "hash_many.psd2" => ensure!(
                 matches!(instruction, Instruction::HashManyPSD2(..)),
                 "Instruction '{instruction}' is not for opcode '{opcode}'."
@@ -851,6 +875,30 @@ impl<N: Network> RegisterTypes<N> {
                 matches!(instruction, Instruction::HashSha3_512Raw(..)),
                 "Instruction '{instruction}' is not for opcode '{opcode}'."
             ),
+            "hash.sha2_224.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_224Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_256.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_256Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_384.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_384Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512_224.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512_224Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512_256.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512_256Raw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
             "hash.keccak256.native" => ensure!(
                 matches!(instruction, Instruction::HashKeccak256Native(..)),
                 "Instruction '{instruction}' is not for opcode '{opcode}'."
@@ -897,6 +945,54 @@ impl<N: Network> RegisterTypes<N> {
             ),
             "hash.sha3_512.native.raw" => ensure!(
                 matches!(instruction, Instruction::HashSha3_512NativeRaw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_224.native" => ensure!(
+                matches!(instruction, Instruction::HashSha2_224Native(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_224.native.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_224NativeRaw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_256.native" => ensure!(
+                matches!(instruction, Instruction::HashSha2_256Native(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_256.native.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_256NativeRaw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_384.native" => ensure!(
+                matches!(instruction, Instruction::HashSha2_384Native(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_384.native.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_384NativeRaw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512.native" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512Native(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512.native.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512NativeRaw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512_224.native" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512_224Native(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512_224.native.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512_224NativeRaw(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512_256.native" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512_256Native(..)),
+                "Instruction '{instruction}' is not for opcode '{opcode}'."
+            ),
+            "hash.sha2_512_256.native.raw" => ensure!(
+                matches!(instruction, Instruction::HashSha2_512_256NativeRaw(..)),
                 "Instruction '{instruction}' is not for opcode '{opcode}'."
             ),
             _ => bail!("Instruction '{instruction}' is not for opcode '{opcode}'."),

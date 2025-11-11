@@ -356,14 +356,14 @@ fn check_hash<const VARIANT: u8>(
 
         // Check that the output type is consistent with the declared type.
         match (VARIANT, output_a) {
-            (0..=32, Value::Plaintext(Plaintext::Literal(literal, _))) => {
+            (0..=44, Value::Plaintext(Plaintext::Literal(literal, _))) => {
                 assert_eq!(
                     &PlaintextType::Literal(literal.to_type()),
                     destination_type,
                     "The output type is inconsistent with the declared type"
                 );
             }
-            (33..=44, Value::Plaintext(plaintext)) => {
+            (45..=68, Value::Plaintext(plaintext)) => {
                 // Check that the plaintext is a bit array.
                 let Ok(bit_array) = plaintext.as_bit_array() else {
                     panic!("The output type is inconsistent with the declared type");
