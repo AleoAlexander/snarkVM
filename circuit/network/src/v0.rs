@@ -34,6 +34,12 @@ use snarkvm_circuit_algorithms::{
     Poseidon2,
     Poseidon4,
     Poseidon8,
+    Sha2_224,
+    Sha2_256,
+    Sha2_384,
+    Sha2_512,
+    Sha2_512_224,
+    Sha2_512_256,
     Sha3_256,
     Sha3_384,
     Sha3_512,
@@ -98,6 +104,19 @@ thread_local! {
     static SHA3_384: Sha3_384<AleoV0> = Sha3_384::<AleoV0>::new();
     /// The SHA-3 hash function, which outputs 512 bits.
     static SHA3_512: Sha3_512<AleoV0> = Sha3_512::<AleoV0>::new();
+
+    /// The SHA-256 hash function, which outputs 224 bits.
+    static SHA2_224: Sha2_224<AleoV0> = Sha2_224::<AleoV0>::new();
+    /// The SHA-256 hash function, which outputs 256 bits.
+    static SHA2_256: Sha2_256<AleoV0> = Sha2_256::<AleoV0>::new();
+    /// The SHA-512 hash function, which outputs 384 bits.
+    static SHA2_384: Sha2_384<AleoV0> = Sha2_384::<AleoV0>::new();
+    /// The SHA-512 hash function, which outputs 512 bits.
+    static SHA2_512: Sha2_512<AleoV0> = Sha2_512::<AleoV0>::new();
+    /// The SHA-512 hash function, which outputs 224 bits.
+    static SHA2_512_224: Sha2_512_224<AleoV0> = Sha2_512_224::<AleoV0>::new();
+    /// The SHA-512 hash function, which outputs 256 bits.
+    static SHA2_512_256: Sha2_512_256<AleoV0> = Sha2_512_256::<AleoV0>::new();
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
@@ -126,6 +145,12 @@ impl Aleo for AleoV0 {
         SHA3_256.with(|_| ());
         SHA3_384.with(|_| ());
         SHA3_512.with(|_| ());
+        SHA2_224.with(|_| ());
+        SHA2_256.with(|_| ());
+        SHA2_384.with(|_| ());
+        SHA2_512.with(|_| ());
+        SHA2_512_224.with(|_| ());
+        SHA2_512_256.with(|_| ());
     }
 
     /// Returns the commitment domain as a constant field element.
@@ -292,6 +317,36 @@ impl Aleo for AleoV0 {
     /// Returns the SHA-3 hash with a 512-bit output.
     fn hash_sha3_512(input: &[Boolean<Self>]) -> Vec<Boolean<Self>> {
         SHA3_512.with(|sha3| sha3.hash(input))
+    }
+
+    /// Returns the SHA-2 hash with a 224-bit output.
+    fn hash_sha2_224(input: &[Boolean<Self>]) -> Vec<Boolean<Self>> {
+        SHA2_224.with(|sha2| sha2.hash(input))
+    }
+
+    /// Returns the SHA-2 hash with a 256-bit output.
+    fn hash_sha2_256(input: &[Boolean<Self>]) -> Vec<Boolean<Self>> {
+        SHA2_256.with(|sha2| sha2.hash(input))
+    }
+
+    /// Returns the SHA-2 hash with a 384-bit output.
+    fn hash_sha2_384(input: &[Boolean<Self>]) -> Vec<Boolean<Self>> {
+        SHA2_384.with(|sha2| sha2.hash(input))
+    }
+
+    /// Returns the SHA-2 hash with a 512-bit output.
+    fn hash_sha2_512(input: &[Boolean<Self>]) -> Vec<Boolean<Self>> {
+        SHA2_512.with(|sha2| sha2.hash(input))
+    }
+
+    /// Returns the SHA-2 hash with a 512-bit output trunacted to 224 bits.
+    fn hash_sha2_512_224(input: &[Boolean<Self>]) -> Vec<Boolean<Self>> {
+        SHA2_512_224.with(|sha2| sha2.hash(input))
+    }
+
+    /// Returns the SHA-2 hash with a 512-bit output trunacted to 256 bits.
+    fn hash_sha2_512_256(input: &[Boolean<Self>]) -> Vec<Boolean<Self>> {
+        SHA2_512_256.with(|sha2| sha2.hash(input))
     }
 
     /// Returns the extended Poseidon hash with an input rate of 2.

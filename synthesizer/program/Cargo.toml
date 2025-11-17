@@ -78,6 +78,16 @@ version = "0.13"
 features = [ "digest", "ecdsa" ]
 default-features = false
 
+[dependencies.rsa]
+version = "0.9.8"
+features = [ "sha2",]
+default-features = false
+
+[dependencies.sha2]
+version = "0.10.9"
+default-features = false
+
+
 [dev-dependencies.snarkvm-console]
 workspace = true
 features = [ "test" ]

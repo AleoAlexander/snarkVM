@@ -33,6 +33,11 @@ name = "poseidon"
 path = "benches/poseidon.rs"
 harness = false
 
+[[bench]]
+name = "sha2"
+path = "benches/sha2.rs"
+harness = false
+
 [dependencies.snarkvm-console-types]
 workspace = true
 features = [ "field", "group", "integers", "scalar" ]
@@ -52,6 +57,15 @@ version = "0.4"
 [dependencies.k256]
 version = "0.13"
 features = [ "digest", "ecdsa" ]
+default-features = false
+
+[dependencies.rsa]
+version = "0.9.8"
+features = [ "sha2",]
+default-features = false
+
+[dependencies.sha2]
+version = "0.10.9"
 default-features = false
 
 [dependencies.smallvec]

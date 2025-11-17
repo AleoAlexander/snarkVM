@@ -29,6 +29,12 @@ use snarkvm_console_algorithms::{
     Poseidon2,
     Poseidon4,
     Poseidon8,
+    Sha2_224,
+    Sha2_256,
+    Sha2_384,
+    Sha2_512,
+    Sha2_512_224,
+    Sha2_512_256,
     Sha3_256,
     Sha3_384,
     Sha3_512,
@@ -513,6 +519,36 @@ impl Network for TestnetV0 {
     /// Returns the SHA-3 hash with a 512-bit output.
     fn hash_sha3_512(input: &[bool]) -> Result<Vec<bool>> {
         Sha3_512::default().hash(input)
+    }
+
+    /// Returns the SHA-2 hash with a 224-bit output.
+    fn hash_sha2_224(input: &[bool]) -> Result<Vec<bool>> {
+        Sha2_224::default().hash(input)
+    }
+
+    /// Returns the SHA-2 hash with a 256-bit output.
+    fn hash_sha2_256(input: &[bool]) -> Result<Vec<bool>> {
+        Sha2_256::default().hash(input)
+    }
+
+    /// Returns the SHA-2 hash with a 384-bit output.
+    fn hash_sha2_384(input: &[bool]) -> Result<Vec<bool>> {
+        Sha2_384::default().hash(input)
+    }
+
+    /// Returns the SHA-2 hash with a 512-bit output.
+    fn hash_sha2_512(input: &[bool]) -> Result<Vec<bool>> {
+        Sha2_512::default().hash(input)
+    }
+
+    /// Returns the SHA-2 hash with a 512-bit output trunacted to 224 bits.
+    fn hash_sha2_512_224(input: &[bool]) -> Result<Vec<bool>> {
+        Sha2_512_224::default().hash(input)
+    }
+
+    /// Returns the SHA-2 hash with a 512-bit output trunacted to 256 bits.
+    fn hash_sha2_512_256(input: &[bool]) -> Result<Vec<bool>> {
+        Sha2_512_256::default().hash(input)
     }
 
     /// Returns the extended Poseidon hash with an input rate of 2.

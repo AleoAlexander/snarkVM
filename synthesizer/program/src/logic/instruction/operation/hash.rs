@@ -126,6 +126,58 @@ pub type HashManyPSD4<N> = HashInstruction<N, { HashVariant::HashManyPSD4 as u8 
 /// Poseidon8 is a cryptographic hash function that processes inputs in 8-field chunks.
 pub type HashManyPSD8<N> = HashInstruction<N, { HashVariant::HashManyPSD8 as u8 }>;
 
+/// SHA2-224 is a cryptographic hash function that outputs a 224-bit digest.
+pub type HashSha2_224<N> = HashInstruction<N, { HashVariant::HashSha2_224 as u8 }>;
+/// SHA2-256 is a cryptographic hash function that outputs a 256-bit digest.
+pub type HashSha2_256<N> = HashInstruction<N, { HashVariant::HashSha2_256 as u8 }>;
+/// SHA2-384 is a cryptographic hash function that outputs a 384-bit digest.
+pub type HashSha2_384<N> = HashInstruction<N, { HashVariant::HashSha2_384 as u8 }>;
+/// SHA2-512 is a cryptographic hash function that outputs a 512-bit digest.
+pub type HashSha2_512<N> = HashInstruction<N, { HashVariant::HashSha2_512 as u8 }>;
+/// SHA2-512/224 is a cryptographic hash function that initially outputs a 512-bit digest but then truncates to 224 bits.
+pub type HashSha2_512_224<N> = HashInstruction<N, { HashVariant::HashSha2_512_224 as u8 }>;
+/// SHA2-512/256 is a cryptographic hash function that initially outputs a 512-bit digest but then truncates to 256 bits.
+pub type HashSha2_512_256<N> = HashInstruction<N, { HashVariant::HashSha2_512_256 as u8 }>;
+
+/// SHA2-224Raw is a cryptographic hash function that outputs a 224-bit digest using the input's raw bits.
+pub type HashSha2_224Raw<N> = HashInstruction<N, { HashVariant::HashSha2_224Raw as u8 }>;
+/// SHA2-256Raw is a cryptographic hash function that outputs a 256-bit digest using the input's raw bits.
+pub type HashSha2_256Raw<N> = HashInstruction<N, { HashVariant::HashSha2_256Raw as u8 }>;
+/// SHA2-384Raw is a cryptographic hash function that outputs a 384-bit digest using the input's raw bits.
+pub type HashSha2_384Raw<N> = HashInstruction<N, { HashVariant::HashSha2_384Raw as u8 }>;
+/// SHA2-512Raw is a cryptographic hash function that outputs a 512-bit digest using the input's raw bits.
+pub type HashSha2_512Raw<N> = HashInstruction<N, { HashVariant::HashSha2_512Raw as u8 }>;
+/// SHA2-512/224Raw is a cryptographic hash function that initially outputs a 512-bit digest using the input's raw bits but then truncates to 224 bits.
+pub type HashSha2_512_224Raw<N> = HashInstruction<N, { HashVariant::HashSha2_512_224Raw as u8 }>;
+/// SHA2-512/256Raw is a cryptographic hash function that initially outputs a 512-bit digest using the input's raw bits but then truncates to 256 bits.
+pub type HashSha2_512_256Raw<N> = HashInstruction<N, { HashVariant::HashSha2_512_256Raw as u8 }>;
+
+/// SHA2-224Native is a cryptographic hash function that outputs a 224-bit digest as a bit array.
+pub type HashSha2_224Native<N> = HashInstruction<N, { HashVariant::HashSha2_224Native as u8 }>;
+/// SHA2-256Native is a cryptographic hash function that outputs a 256-bit digest as a bit array.
+pub type HashSha2_256Native<N> = HashInstruction<N, { HashVariant::HashSha2_256Native as u8 }>;
+/// SHA2-384Native is a cryptographic hash function that outputs a 384-bit digest as a bit array.
+pub type HashSha2_384Native<N> = HashInstruction<N, { HashVariant::HashSha2_384Native as u8 }>;
+/// SHA2-512Native is a cryptographic hash function that outputs a 512-bit digest as a bit array.
+pub type HashSha2_512Native<N> = HashInstruction<N, { HashVariant::HashSha2_512Native as u8 }>;
+/// SHA2-512/224Native is a cryptographic hash function that initially outputs a 512-bit digest but then truncates to 224 bits and outputs as a bit array.
+pub type HashSha2_512_224Native<N> = HashInstruction<N, { HashVariant::HashSha2_512_224Native as u8 }>;
+/// SHA2-512/256Native is a cryptographic hash function that initially outputs a 512-bit digest but then truncates to 256 bits and outputs as a bit array.
+pub type HashSha2_512_256Native<N> = HashInstruction<N, { HashVariant::HashSha2_512_256Native as u8 }>;
+
+/// SHA2-224NativeRaw is a cryptographic hash function that outputs a 224-bit digest as a bit array using the input's raw bits.
+pub type HashSha2_224NativeRaw<N> = HashInstruction<N, { HashVariant::HashSha2_224NativeRaw as u8 }>;
+/// SHA2-256NativeRaw is a cryptographic hash function that outputs a 256-bit digest as a bit array using the input's raw bits.
+pub type HashSha2_256NativeRaw<N> = HashInstruction<N, { HashVariant::HashSha2_256NativeRaw as u8 }>;
+/// SHA2-384NativeRaw is a cryptographic hash function that outputs a 384-bit digest as a bit array using the input's raw bits.
+pub type HashSha2_384NativeRaw<N> = HashInstruction<N, { HashVariant::HashSha2_384NativeRaw as u8 }>;
+/// SHA2-512NativeRaw is a cryptographic hash function that outputs a 512-bit digest as a bit array using the input's raw bits.
+pub type HashSha2_512NativeRaw<N> = HashInstruction<N, { HashVariant::HashSha2_512NativeRaw as u8 }>;
+/// SHA2-512_224NativeRaw is a cryptographic hash function that initially outputs a 512-bit digest using the input's raw bits. but then truncates to 224 bits and outputs as a bit array.
+pub type HashSha2_512_224NativeRaw<N> = HashInstruction<N, { HashVariant::HashSha2_512_224NativeRaw as u8 }>;
+/// SHA2-512_256NativeRaw is a cryptographic hash function that initially outputs a 512-bit digest using the input's raw bits. but then truncates to 256 bits and outputs as a bit array.
+pub type HashSha2_512_256NativeRaw<N> = HashInstruction<N, { HashVariant::HashSha2_512_256NativeRaw as u8 }>;
+
 /// Which hash function to use.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Sequence)]
 pub enum HashVariant {
@@ -147,6 +199,12 @@ pub enum HashVariant {
     HashManyPSD2,
     HashManyPSD4,
     HashManyPSD8,
+    HashSha2_224,
+    HashSha2_256,
+    HashSha2_384,
+    HashSha2_512,
+    HashSha2_512_224,
+    HashSha2_512_256,
     // The variants that hash the raw inputs.
     HashBHP256Raw,
     HashBHP512Raw,
@@ -163,6 +221,12 @@ pub enum HashVariant {
     HashSha3_256Raw,
     HashSha3_384Raw,
     HashSha3_512Raw,
+    HashSha2_224Raw,
+    HashSha2_256Raw,
+    HashSha2_384Raw,
+    HashSha2_512Raw,
+    HashSha2_512_224Raw,
+    HashSha2_512_256Raw,
     // The variants that perform the underlying hash, returning bit arrays.
     HashKeccak256Native,
     HashKeccak256NativeRaw,
@@ -176,6 +240,18 @@ pub enum HashVariant {
     HashSha3_384NativeRaw,
     HashSha3_512Native,
     HashSha3_512NativeRaw,
+    HashSha2_224Native,
+    HashSha2_224NativeRaw,
+    HashSha2_256Native,
+    HashSha2_256NativeRaw,
+    HashSha2_384Native,
+    HashSha2_384NativeRaw,
+    HashSha2_512Native,
+    HashSha2_512NativeRaw,
+    HashSha2_512_224Native,
+    HashSha2_512_224NativeRaw,
+    HashSha2_512_256Native,
+    HashSha2_512_256NativeRaw,
 }
 
 impl HashVariant {
@@ -200,35 +276,59 @@ impl HashVariant {
             15 => Self::HashManyPSD2,
             16 => Self::HashManyPSD4,
             17 => Self::HashManyPSD8,
+            18 => Self::HashSha2_224,
+            19 => Self::HashSha2_256,
+            20 => Self::HashSha2_384,
+            21 => Self::HashSha2_512,
+            22 => Self::HashSha2_512_224,
+            23 => Self::HashSha2_512_256,
             // The variants that hash the raw inputs.
-            18 => Self::HashBHP256Raw,
-            19 => Self::HashBHP512Raw,
-            20 => Self::HashBHP768Raw,
-            21 => Self::HashBHP1024Raw,
-            22 => Self::HashKeccak256Raw,
-            23 => Self::HashKeccak384Raw,
-            24 => Self::HashKeccak512Raw,
-            25 => Self::HashPED64Raw,
-            26 => Self::HashPED128Raw,
-            27 => Self::HashPSD2Raw,
-            28 => Self::HashPSD4Raw,
-            29 => Self::HashPSD8Raw,
-            30 => Self::HashSha3_256Raw,
-            31 => Self::HashSha3_384Raw,
-            32 => Self::HashSha3_512Raw,
+            24 => Self::HashBHP256Raw,
+            25 => Self::HashBHP512Raw,
+            26 => Self::HashBHP768Raw,
+            27 => Self::HashBHP1024Raw,
+            28 => Self::HashKeccak256Raw,
+            29 => Self::HashKeccak384Raw,
+            30 => Self::HashKeccak512Raw,
+            31 => Self::HashPED64Raw,
+            32 => Self::HashPED128Raw,
+            33 => Self::HashPSD2Raw,
+            34 => Self::HashPSD4Raw,
+            35 => Self::HashPSD8Raw,
+            36 => Self::HashSha3_256Raw,
+            37 => Self::HashSha3_384Raw,
+            38 => Self::HashSha3_512Raw,
+            39 => Self::HashSha2_224Raw,
+            40 => Self::HashSha2_256Raw,
+            41 => Self::HashSha2_384Raw,
+            42 => Self::HashSha2_512Raw,
+            43 => Self::HashSha2_512_224Raw,
+            44 => Self::HashSha2_512_256Raw,
             // The variants that perform the underlying hash, returning bit arrays.
-            33 => Self::HashKeccak256Native,
-            34 => Self::HashKeccak256NativeRaw,
-            35 => Self::HashKeccak384Native,
-            36 => Self::HashKeccak384NativeRaw,
-            37 => Self::HashKeccak512Native,
-            38 => Self::HashKeccak512NativeRaw,
-            39 => Self::HashSha3_256Native,
-            40 => Self::HashSha3_256NativeRaw,
-            41 => Self::HashSha3_384Native,
-            42 => Self::HashSha3_384NativeRaw,
-            43 => Self::HashSha3_512Native,
-            44 => Self::HashSha3_512NativeRaw,
+            45 => Self::HashKeccak256Native,
+            46 => Self::HashKeccak256NativeRaw,
+            47 => Self::HashKeccak384Native,
+            48 => Self::HashKeccak384NativeRaw,
+            49 => Self::HashKeccak512Native,
+            50 => Self::HashKeccak512NativeRaw,
+            51 => Self::HashSha3_256Native,
+            52 => Self::HashSha3_256NativeRaw,
+            53 => Self::HashSha3_384Native,
+            54 => Self::HashSha3_384NativeRaw,
+            55 => Self::HashSha3_512Native,
+            56 => Self::HashSha3_512NativeRaw,
+            57 => Self::HashSha2_224Native,
+            58 => Self::HashSha2_224NativeRaw,
+            59 => Self::HashSha2_256Native,
+            60 => Self::HashSha2_256NativeRaw,
+            61 => Self::HashSha2_384Native,
+            62 => Self::HashSha2_384NativeRaw,
+            63 => Self::HashSha2_512Native,
+            64 => Self::HashSha2_512NativeRaw,
+            65 => Self::HashSha2_512_224Native,
+            66 => Self::HashSha2_512_224NativeRaw,
+            67 => Self::HashSha2_512_256Native,
+            68 => Self::HashSha2_512_256NativeRaw,
             _ => panic!("Invalid 'hash' instruction opcode"),
         }
     }
@@ -254,6 +354,12 @@ impl HashVariant {
             Self::HashManyPSD2 => "hash_many.psd2",
             Self::HashManyPSD4 => "hash_many.psd4",
             Self::HashManyPSD8 => "hash_many.psd8",
+            Self::HashSha2_224 => "hash.sha2_224",
+            Self::HashSha2_256 => "hash.sha2_256",
+            Self::HashSha2_384 => "hash.sha2_384",
+            Self::HashSha2_512 => "hash.sha2_512",
+            Self::HashSha2_512_224 => "hash.sha2_512_224",
+            Self::HashSha2_512_256 => "hash.sha2_512_256",
             // The variants that hash the raw inputs.
             Self::HashBHP256Raw => "hash.bhp256.raw",
             Self::HashBHP512Raw => "hash.bhp512.raw",
@@ -270,6 +376,12 @@ impl HashVariant {
             Self::HashSha3_256Raw => "hash.sha3_256.raw",
             Self::HashSha3_384Raw => "hash.sha3_384.raw",
             Self::HashSha3_512Raw => "hash.sha3_512.raw",
+            Self::HashSha2_224Raw => "hash.sha2_224.raw",
+            Self::HashSha2_256Raw => "hash.sha2_256.raw",
+            Self::HashSha2_384Raw => "hash.sha2_384.raw",
+            Self::HashSha2_512Raw => "hash.sha2_512.raw",
+            Self::HashSha2_512_224Raw => "hash.sha2_512_224.raw",
+            Self::HashSha2_512_256Raw => "hash.sha2_512_256.raw",
             // The variants that perform the underlying hash returning bit arrays.
             Self::HashKeccak256Native => "hash.keccak256.native",
             Self::HashKeccak256NativeRaw => "hash.keccak256.native.raw",
@@ -283,6 +395,18 @@ impl HashVariant {
             Self::HashSha3_384NativeRaw => "hash.sha3_384.native.raw",
             Self::HashSha3_512Native => "hash.sha3_512.native",
             Self::HashSha3_512NativeRaw => "hash.sha3_512.native.raw",
+            Self::HashSha2_224Native => "hash.sha2_224.native",
+            Self::HashSha2_224NativeRaw => "hash.sha2_224.native.raw",
+            Self::HashSha2_256Native => "hash.sha2_256.native",
+            Self::HashSha2_256NativeRaw => "hash.sha2_256.native.raw",
+            Self::HashSha2_384Native => "hash.sha2_384.native",
+            Self::HashSha2_384NativeRaw => "hash.sha2_384.native.raw",
+            Self::HashSha2_512Native => "hash.sha2_512.native",
+            Self::HashSha2_512NativeRaw => "hash.sha2_512.native.raw",
+            Self::HashSha2_512_224Native => "hash.sha2_512_224.native",
+            Self::HashSha2_512_224NativeRaw => "hash.sha2_512_224.native.raw",
+            Self::HashSha2_512_256Native => "hash.sha2_512_256.native",
+            Self::HashSha2_512_256NativeRaw => "hash.sha2_512_256.native.raw",
         }
     }
 
@@ -307,6 +431,31 @@ impl HashVariant {
             | Self::HashManyPSD2
             | Self::HashManyPSD4
             | Self::HashManyPSD8 => false,
+            //TODO: Check if SHA2 needs to be byte aligned
+            Self::HashSha2_224
+            | Self::HashSha2_256
+            | Self::HashSha2_384
+            | Self::HashSha2_512
+            | Self::HashSha2_512_224
+            | Self::HashSha2_512_256 => false,
+            Self::HashSha2_224Raw
+            | Self::HashSha2_256Raw
+            | Self::HashSha2_384Raw
+            | Self::HashSha2_512Raw
+            | Self::HashSha2_512_224Raw
+            | Self::HashSha2_512_256Raw => false,
+            Self::HashSha2_224Native
+            | Self::HashSha2_256Native
+            | Self::HashSha2_384Native
+            | Self::HashSha2_512Native
+            | Self::HashSha2_512_224Native
+            | Self::HashSha2_512_256Native => false,
+            Self::HashSha2_224NativeRaw
+            | Self::HashSha2_256NativeRaw
+            | Self::HashSha2_384NativeRaw
+            | Self::HashSha2_512NativeRaw
+            | Self::HashSha2_512_224NativeRaw
+            | Self::HashSha2_512_256NativeRaw => false,
             // The variants that hash the raw inputs.
             Self::HashBHP256Raw | Self::HashBHP512Raw | Self::HashBHP768Raw | Self::HashBHP1024Raw => false,
             Self::HashKeccak256Raw | Self::HashKeccak384Raw | Self::HashKeccak512Raw => true,
@@ -350,7 +499,13 @@ impl HashVariant {
             | Self::HashSha3_512
             | Self::HashManyPSD2
             | Self::HashManyPSD4
-            | Self::HashManyPSD8 => false,
+            | Self::HashManyPSD8
+            | Self::HashSha2_224
+            | Self::HashSha2_256
+            | Self::HashSha2_384
+            | Self::HashSha2_512
+            | Self::HashSha2_512_224
+            | Self::HashSha2_512_256 => false,
             // The variants that hash the raw inputs.
             Self::HashBHP256Raw
             | Self::HashBHP512Raw
@@ -366,7 +521,13 @@ impl HashVariant {
             | Self::HashPSD8Raw
             | Self::HashSha3_256Raw
             | Self::HashSha3_384Raw
-            | Self::HashSha3_512Raw => true,
+            | Self::HashSha3_512Raw
+            | Self::HashSha2_224Raw
+            | Self::HashSha2_256Raw
+            | Self::HashSha2_384Raw
+            | Self::HashSha2_512Raw
+            | Self::HashSha2_512_224Raw
+            | Self::HashSha2_512_256Raw => true,
             // The variants that perform the underlying hash returning bit arrays.
             Self::HashKeccak256Native
             | Self::HashKeccak256NativeRaw
@@ -379,7 +540,19 @@ impl HashVariant {
             | Self::HashSha3_384Native
             | Self::HashSha3_384NativeRaw
             | Self::HashSha3_512Native
-            | Self::HashSha3_512NativeRaw => true,
+            | Self::HashSha3_512NativeRaw
+            | Self::HashSha2_224Native
+            | Self::HashSha2_224NativeRaw
+            | Self::HashSha2_256Native
+            | Self::HashSha2_256NativeRaw
+            | Self::HashSha2_384Native
+            | Self::HashSha2_384NativeRaw
+            | Self::HashSha2_512Native
+            | Self::HashSha2_512NativeRaw
+            | Self::HashSha2_512_224Native
+            | Self::HashSha2_512_224NativeRaw
+            | Self::HashSha2_512_256Native
+            | Self::HashSha2_512_256NativeRaw => true,
         }
     }
 
@@ -406,14 +579,14 @@ fn check_number_of_operands(variant: u8, opcode: Opcode, num_operands: usize) ->
 /// Returns 'true' if the destination type is valid.
 fn is_valid_destination_type<N: Network>(variant: u8, destination_type: &PlaintextType<N>) -> bool {
     match variant {
-        0..=32 => !matches!(
+        0..=44 => !matches!(
             destination_type,
             PlaintextType::Literal(LiteralType::Boolean)
                 | PlaintextType::Literal(LiteralType::String)
                 | PlaintextType::Struct(..)
                 | PlaintextType::Array(..)
         ),
-        33..=44 => matches!(destination_type, PlaintextType::Array(array_type) if array_type.is_bit_array()),
+        45..=69 => matches!(destination_type, PlaintextType::Array(array_type) if array_type.is_bit_array()),
         _ => panic!("Invalid 'hash' instruction opcode"),
     }
 }
@@ -517,6 +690,12 @@ macro_rules! do_hash {
             (HashVariant::HashManyPSD2,  PlaintextType::Literal(_)) => bail!("'hash_many.psd2' is not yet implemented"),
             (HashVariant::HashManyPSD4,  PlaintextType::Literal(_)) => bail!("'hash_many.psd4' is not yet implemented"),
             (HashVariant::HashManyPSD8,  PlaintextType::Literal(_)) => bail!("'hash_many.psd8' is not yet implemented"),
+            (HashVariant::HashSha2_224,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp256(&$q($N::hash_sha2_224(&bits()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_256,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp256(&$q($N::hash_sha2_256(&bits()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_384,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp512(&$q($N::hash_sha2_384(&bits()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_512,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp512(&$q($N::hash_sha2_512(&bits()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_512_224,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp256(&$q($N::hash_sha2_512_224(&bits()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_512_256,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp256(&$q($N::hash_sha2_512_256(&bits()))?))?).cast_lossy(*literal_type)?),
 
             // The variants that hash the raw inputs.
             (HashVariant::HashBHP256Raw,    PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp256(&bits_raw()))?).cast_lossy(*literal_type)?),
@@ -537,6 +716,12 @@ macro_rules! do_hash {
             (HashVariant::HashSha3_256Raw,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp256(&$q($N::hash_sha3_256(&check_multiple_of_8(bits_raw())?))?))?).cast_lossy(*literal_type)?),
             (HashVariant::HashSha3_384Raw,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp512(&$q($N::hash_sha3_384(&check_multiple_of_8(bits_raw())?))?))?).cast_lossy(*literal_type)?),
             (HashVariant::HashSha3_512Raw,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp512(&$q($N::hash_sha3_512(&check_multiple_of_8(bits_raw())?))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_224Raw,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp256(&$q($N::hash_sha2_224(&bits_raw()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_256Raw,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp512(&$q($N::hash_sha2_256(&bits_raw()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_384Raw,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp512(&$q($N::hash_sha2_384(&bits_raw()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_512Raw,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp256(&$q($N::hash_sha2_512(&bits_raw()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_512_224Raw,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp512(&$q($N::hash_sha2_512_224(&bits_raw()))?))?).cast_lossy(*literal_type)?),
+            (HashVariant::HashSha2_512_256Raw,  PlaintextType::Literal(literal_type)) => <$pt>::from(<$lt>::from($q($N::hash_to_group_bhp512(&$q($N::hash_sha2_512_256(&bits_raw()))?))?).cast_lossy(*literal_type)?),
 
             // The variants that perform the underlying hash, returning bit arrays.
             (HashVariant::HashKeccak256Native,    PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_keccak256(&bits()))?, **array_type.length())?,
@@ -551,6 +736,18 @@ macro_rules! do_hash {
             (HashVariant::HashSha3_384NativeRaw,  PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha3_384(&check_multiple_of_8(bits_raw())?))?, **array_type.length())?,
             (HashVariant::HashSha3_512Native,     PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha3_512(&bits()))?, **array_type.length())?,
             (HashVariant::HashSha3_512NativeRaw,  PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha3_512(&check_multiple_of_8(bits_raw())?))?, **array_type.length())?,
+            (HashVariant::HashSha2_224Native,     PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_224(&bits()))?, **array_type.length())?,
+            (HashVariant::HashSha2_224NativeRaw,  PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_224(&bits_raw()))?, **array_type.length())?,
+            (HashVariant::HashSha2_256Native,     PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_256(&bits()))?, **array_type.length())?,
+            (HashVariant::HashSha2_256NativeRaw,  PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_256(&bits_raw()))?, **array_type.length())?,
+            (HashVariant::HashSha2_384Native,     PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_384(&bits()))?, **array_type.length())?,
+            (HashVariant::HashSha2_384NativeRaw,  PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_384(&bits_raw()))?, **array_type.length())?,
+            (HashVariant::HashSha2_512Native,     PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_512(&bits()))?, **array_type.length())?,
+            (HashVariant::HashSha2_512NativeRaw,  PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_512(&bits_raw()))?, **array_type.length())?,
+            (HashVariant::HashSha2_512_224Native,     PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_512_224(&bits()))?, **array_type.length())?,
+            (HashVariant::HashSha2_512_224NativeRaw,  PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_512_224(&bits_raw()))?, **array_type.length())?,
+            (HashVariant::HashSha2_512_256Native,     PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_512_256(&bits()))?, **array_type.length())?,
+            (HashVariant::HashSha2_512_256NativeRaw,  PlaintextType::Array(array_type)) => <$pt>::from_bit_array($q($N::hash_sha2_512_256(&bits_raw()))?, **array_type.length())?,
             (_, destination_type) => bail!("Invalid destination type '{destination_type}' for 'hash' variant: {}", $variant.opcode()),
         }
     }};
@@ -853,7 +1050,7 @@ mod tests {
         rng: &mut R,
     ) -> Vec<PlaintextType<N>> {
         match variant {
-            0..=32 => vec![
+            0..=44 => vec![
                 PlaintextType::Literal(LiteralType::Address),
                 PlaintextType::Literal(LiteralType::Field),
                 PlaintextType::Literal(LiteralType::Group),
@@ -869,7 +1066,7 @@ mod tests {
                 PlaintextType::Literal(LiteralType::U128),
                 PlaintextType::Literal(LiteralType::Scalar),
             ],
-            33..=44 => (0..10)
+            45..=68 => (0..10)
                 .map(|_| {
                     PlaintextType::Array(
                         ArrayType::new(PlaintextType::Literal(LiteralType::Boolean), vec![U32::new(
@@ -931,6 +1128,13 @@ mod tests {
         //run_test::<CurrentNetwork, { HashVariant::HashManyPSD4 as u8 }>();
         //run_test::<CurrentNetwork, { HashVariant::HashManyPSD8 as u8 }>();
 
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_224 as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_256 as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_384 as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512 as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512_224 as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512_256 as u8 }>();
+
         run_test::<CurrentNetwork, { HashVariant::HashBHP256Raw as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashBHP512Raw as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashBHP768Raw as u8 }>();
@@ -951,6 +1155,13 @@ mod tests {
         run_test::<CurrentNetwork, { HashVariant::HashSha3_384Raw as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashSha3_512Raw as u8 }>();
 
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_224Raw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_256Raw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_384Raw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512Raw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512_224Raw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512_256Raw as u8 }>();
+
         run_test::<CurrentNetwork, { HashVariant::HashKeccak256Native as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashKeccak384Native as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashKeccak512Native as u8 }>();
@@ -959,6 +1170,13 @@ mod tests {
         run_test::<CurrentNetwork, { HashVariant::HashSha3_384Native as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashSha3_512Native as u8 }>();
 
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_224Native as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_256Native as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_384Native as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512Native as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512_224Native as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512_256Native as u8 }>();
+
         run_test::<CurrentNetwork, { HashVariant::HashKeccak256NativeRaw as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashKeccak384NativeRaw as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashKeccak512NativeRaw as u8 }>();
@@ -966,11 +1184,18 @@ mod tests {
         run_test::<CurrentNetwork, { HashVariant::HashSha3_256NativeRaw as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashSha3_384NativeRaw as u8 }>();
         run_test::<CurrentNetwork, { HashVariant::HashSha3_512NativeRaw as u8 }>();
+
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_224NativeRaw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_256NativeRaw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_384NativeRaw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512NativeRaw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512_224NativeRaw as u8 }>();
+        run_test::<CurrentNetwork, { HashVariant::HashSha2_512_256NativeRaw as u8 }>();
     }
 
     #[test]
     fn check_number_of_hash_variants() {
-        assert_eq!(enum_iterator::cardinality::<HashVariant>(), 45);
+        assert_eq!(enum_iterator::cardinality::<HashVariant>(), 69);
     }
 
     #[test]

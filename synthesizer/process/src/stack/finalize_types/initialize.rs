@@ -737,6 +737,7 @@ impl<N: Network> FinalizeTypes<N> {
                 );
             }
             Opcode::ECDSA(opcode) => RegisterTypes::check_ecdsa_opcode(opcode, instruction)?,
+            Opcode::RSA(opcode) => RegisterTypes::check_rsa_opcode(opcode, instruction)?,
             Opcode::Serialize(opcode) => RegisterTypes::check_serialize_opcode(opcode, instruction)?,
             Opcode::Deserialize(opcode) => RegisterTypes::check_deserialize_opcode(opcode, instruction)?,
         }

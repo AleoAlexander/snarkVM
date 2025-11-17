@@ -14,7 +14,7 @@
 // limitations under the License.
 
 #[cfg(test)]
-pub mod tests;
+pub mod ecdsa_tests;
 
 mod serialize;
 

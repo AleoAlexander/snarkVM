@@ -228,6 +228,54 @@ pub enum Instruction<N: Network> {
     HashSha3_512Native(HashSha3_512Native<N>),
     /// Performs a SHA-3 hash on the input's raw bits, outputting 512 bits.
     HashSha3_512NativeRaw(HashSha3_512NativeRaw<N>),
+    /// Performs a SHA-2 hash on the input, outputting 224 bits, hashing the result with BHP256.
+    HashSha2_224(HashSha2_224<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 224 bits, hashing the result with BHP256.
+    HashSha2_224Raw(HashSha2_224Raw<N>),
+    /// Performs a SHA-2 hash on the input's bits, outputting 224 bits.
+    HashSha2_224Native(HashSha2_224Native<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 224 bits.
+    HashSha2_224NativeRaw(HashSha2_224NativeRaw<N>),
+    /// Performs a SHA-2 hash on the input, outputting 256 bits, hashing the result with BHP256.
+    HashSha2_256(HashSha2_256<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 256 bits, hashing the result with BHP256.
+    HashSha2_256Raw(HashSha2_256Raw<N>),
+    /// Performs a SHA-2 hash on the input's bits, outputting 256 bits.
+    HashSha2_256Native(HashSha2_256Native<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 256 bits.
+    HashSha2_256NativeRaw(HashSha2_256NativeRaw<N>),
+    /// Performs a SHA-2 hash on the input, outputting 384 bits, hashing the result with BHP512.
+    HashSha2_384(HashSha2_384<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 384 bits, hashing the result with BHP512.
+    HashSha2_384Raw(HashSha2_384Raw<N>),
+    /// Performs a SHA-2 hash on the input's bits, outputting 384 bits.
+    HashSha2_384Native(HashSha2_384Native<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 384 bits.
+    HashSha2_384NativeRaw(HashSha2_384NativeRaw<N>),
+    /// Performs a SHA-2 hash on the input, outputting 512 bits, hashing the result with BHP512.
+    HashSha2_512(HashSha2_512<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 512 bits, hashing the result with BHP512.
+    HashSha2_512Raw(HashSha2_512Raw<N>),
+    /// Performs a SHA-2 hash on the input's bits, outputting 512 bits.
+    HashSha2_512Native(HashSha2_512Native<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 512 bits.
+    HashSha2_512NativeRaw(HashSha2_512NativeRaw<N>),
+    /// Performs a SHA-2 hash on the input, outputting 224 bits, hashing the result with BHP256.
+    HashSha2_512_224(HashSha2_512_224<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 224 bits, hashing the result with BHP256.
+    HashSha2_512_224Raw(HashSha2_512_224Raw<N>),
+    /// Performs a SHA-2 hash on the input's bits, outputting 224 bits.
+    HashSha2_512_224Native(HashSha2_512_224Native<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 224 bits.
+    HashSha2_512_224NativeRaw(HashSha2_512_224NativeRaw<N>),
+    /// Performs a SHA-2 hash on the input, outputting 256 bits, hashing the result with BHP256.
+    HashSha2_512_256(HashSha2_512_256<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 256 bits, hashing the result with BHP256.
+    HashSha2_512_256Raw(HashSha2_512_256Raw<N>),
+    /// Performs a SHA-2 hash on the input's bits, outputting 256 bits.
+    HashSha2_512_256Native(HashSha2_512_256Native<N>),
+    /// Performs a SHA-2 hash on the input's raw bits, outputting 256 bits.
+    HashSha2_512_256NativeRaw(HashSha2_512_256NativeRaw<N>),
     /// Performs a Poseidon hash with an input rate of 2.
     HashManyPSD2(HashManyPSD2<N>),
     /// Performs a Poseidon hash with an input rate of 4.
@@ -268,6 +316,42 @@ pub enum Instruction<N: Network> {
     Rem(Rem<N>),
     /// Divides `first` by `second`, wrapping around at the boundary of the type, storing the remainder in `destination`.
     RemWrapped(RemWrapped<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_224.
+    RSAVerifySha2_224(RSAVerifySha2_224<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_224 and raw inputs.
+    RSAVerifySha2_224Raw(RSAVerifySha2_224Raw<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `digest` outputted from SHA_224 using RSA.
+    RSAVerifySha2_224Digest(RSAVerifySha2_224Digest<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_256.
+    RSAVerifySha2_256(RSAVerifySha2_256<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_256 and raw inputs.
+    RSAVerifySha2_256Raw(RSAVerifySha2_256Raw<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `digest` outputted from SHA_256 using RSA.
+    RSAVerifySha2_256Digest(RSAVerifySha2_256Digest<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_384.
+    RSAVerifySha2_384(RSAVerifySha2_384<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_384 and raw inputs.
+    RSAVerifySha2_384Raw(RSAVerifySha2_384Raw<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `digest` outputted from SHA_384 using RSA.
+    RSAVerifySha2_384Digest(RSAVerifySha2_384Digest<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_512.
+    RSAVerifySha2_512(RSAVerifySha2_512<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_512 and raw inputs.
+    RSAVerifySha2_512Raw(RSAVerifySha2_512Raw<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `digest` outputted from SHA_512 using RSA.
+    RSAVerifySha2_512Digest(RSAVerifySha2_512Digest<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_512_224.
+    RSAVerifySha2_512_224(RSAVerifySha2_512_224<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_512_224 and raw inputs.
+    RSAVerifySha2_512_224Raw(RSAVerifySha2_512_224Raw<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `digest` outputted from SHA_512_224 using RSA.
+    RSAVerifySha2_512_224Digest(RSAVerifySha2_512_224Digest<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_512_256.
+    RSAVerifySha2_512_256(RSAVerifySha2_512_256<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `message` using RSA with SHA_512_256 and raw inputs.
+    RSAVerifySha2_512_256Raw(RSAVerifySha2_512_256Raw<N>),
+    /// Computes whether `signature` is valid for the given `signer` and `digest` outputted from SHA_512_256 using RSA.
+    RSAVerifySha2_512_256Digest(RSAVerifySha2_512_256Digest<N>),
     /// Serializes the bits of the input.
     SerializeBits(SerializeBits<N>),
     /// Serializes the raw bits of the input.
@@ -447,7 +531,53 @@ macro_rules! instruction {
             SerializeBits,
             SerializeBitsRaw,
 
+            // New opcodes added in `ConsensusVersion::V12`
+            HashSha2_224,
+            HashSha2_224Raw,
+            HashSha2_224Native,
+            HashSha2_224NativeRaw,
+            HashSha2_256,
+            HashSha2_256Raw,
+            HashSha2_256Native,
+            HashSha2_256NativeRaw,
+            HashSha2_384,
+            HashSha2_384Raw,
+            HashSha2_384Native,
+            HashSha2_384NativeRaw,
+            HashSha2_512,
+            HashSha2_512Raw,
+            HashSha2_512Native,
+            HashSha2_512NativeRaw,
+            HashSha2_512_224,
+            HashSha2_512_224Raw,
+            HashSha2_512_224Native,
+            HashSha2_512_224NativeRaw,
+            HashSha2_512_256,
+            HashSha2_512_256Raw,
+            HashSha2_512_256Native,
+            HashSha2_512_256NativeRaw,
+            RSAVerifySha2_224,
+            RSAVerifySha2_224Raw,
+            RSAVerifySha2_224Digest,
+            RSAVerifySha2_256,
+            RSAVerifySha2_256Raw,
+            RSAVerifySha2_256Digest,
+            RSAVerifySha2_384,
+            RSAVerifySha2_384Raw,
+            RSAVerifySha2_384Digest,
+            RSAVerifySha2_512,
+            RSAVerifySha2_512Raw,
+            RSAVerifySha2_512Digest,
+            RSAVerifySha2_512_224,
+            RSAVerifySha2_512_224Raw,
+            RSAVerifySha2_512_224Digest,
+            RSAVerifySha2_512_256,
+            RSAVerifySha2_512_256Raw,
+            RSAVerifySha2_512_256Digest,
+
             // New opcodes should be added here, with a comment on which consensus version they were added in.
+
+
         }}
     };
     // A variant **without** curly braces:
@@ -637,7 +767,7 @@ mod tests {
         // Sanity check the number of instructions is unchanged.
         // Note that the number of opcodes **MUST NOT** exceed u16::MAX.
         assert_eq!(
-            119,
+            161,
             Instruction::<CurrentNetwork>::OPCODES.len(),
             "Update me if the number of instructions changes."
         );

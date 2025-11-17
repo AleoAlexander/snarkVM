@@ -40,3 +40,9 @@ pub use pedersen::{Pedersen, Pedersen64, Pedersen128};
 
 mod poseidon;
 pub use poseidon::{Poseidon, Poseidon2, Poseidon4, Poseidon8};
+
+mod rsa;
+pub use rsa::*;
+
+mod sha2;
+pub use sha2::*;
